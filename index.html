@@ -1158,7 +1158,47 @@
 
             // Contact form submission
             $('#contactForm').on('submit', function (e) {
-            e.preventDefault();
+              e.preventDefault();
+            const email = $('#email').val().trim();
+
+              // Email format regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ 
+              // Allowed email domains
+            const allowedDomains = [
+                'gmail.com',
+                'yahoo.com',
+                'hotmail.com',
+                'outlook.com',
+                'live.com',
+                'icloud.com',
+                'zoho.com',
+                'protonmail.com'
+             ];
+
+             const emailDomain = email.split('@')[1]?.toLowerCase();
+
+               // Validate email format
+             if (!emailRegex.test(email)) {
+                 Swal.fire({
+                      icon: 'warning',
+                      title: 'Invalid Email',
+                      text: 'Please enter a valid email address.',
+                      confirmButtonText: 'OK'
+                 });
+               return;
+            }
+
+              // Allow only selected providers
+            if (!allowedDomains.includes(emailDomain)) {
+               Swal.fire({
+                   icon: 'error',
+                   title: 'Email Provider Not Allowed',
+                   text: 'Please use Gmail, Yahoo, Hotmail, Outlook, Zoho, or similar trusted email services.',
+                   confirmButtonText: 'OK'
+             });
+            return;
+           }
             $.ajax({
               method: 'POST',
               url: 'https://formsubmit.co/ajax/ankitprime3.14@gmail.com',
