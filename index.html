@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         :root {
             --primary-cyan: #00bcd4;
@@ -1156,24 +1158,37 @@
 
             // Contact form submission
             $('#contactForm').on('submit', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    method: 'POST',
-                    url: 'https://formsubmit.co/ajax/ankitprime3.14@gmail.com',
-                    dataType: 'json',
-                    accepts: 'application/json',
-                    data: {
-                        name: $('#name').val(),
-                        eamil:$('#email').val(),
-                        subject:$('#subject').val(),
-                        message: $('#message').val()
-                    },
-                    success: (data) => console.log(data),
-                    error: (err) => console.log(err)
+            e.preventDefault();
+            $.ajax({
+              method: 'POST',
+              url: 'https://formsubmit.co/ajax/ankitprime3.14@gmail.com',
+              dataType: 'json',
+              accepts: 'application/json',
+              data: {
+                 name: $('#name').val(),
+                 email: $('#email').val(),
+                 subject: $('#subject').val(),
+                 message: $('#message').val()
+             },
+              success: (data) => {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Message Sent!',
+                      text: 'Thank you for your message! I will get back to you soon.',
+                      confirmButtonText: 'OK'
                 });
-                alert('Thank you for your message! I will get back to you soon.');
-                this.reset();
+              this.reset();
+             },
+                error: (err) => {
+                   Swal.fire({
+                     icon: 'error',
+                      title: 'Oops!',
+                      text: 'Something went wrong. Please try again later.',
+                      confirmButtonText: 'OK'
+                   });
+                }
             });
+        });
         });
 
         // Enhanced Particles.js configuration with reduced density
